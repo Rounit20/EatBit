@@ -1,0 +1,218 @@
+{
+  "name": "Down South Cafe",
+  "contact": "+91 9122871250",
+  "address": "Behind Hostel No. 5",
+  "timing": "10:00 AM - 10:00 PM",
+  "rating": 4.5,
+  "reviews": 120,
+  "menu": [
+    {
+      "category": "Beverages",
+      "items": [
+        {
+          "name": "Coffee",
+          "description": "Hot brewed coffee.",
+          "price": 25,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Tea",
+          "description": "Classic Indian chai.",
+          "price": 15,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Detox Kahwa",
+          "description": "Herbal detox drink.",
+          "price": 50,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Cold Coffee",
+          "description": "Chilled coffee with milk and sugar.",
+          "price": 90,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Blue Lagoon Mocktail",
+          "description": "Refreshing blue lagoon mocktail.",
+          "price": 70,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Virgin Mojito",
+          "description": "Minty refreshing mojito.",
+          "price": 70,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "category": "Burgers",
+      "items": [
+        {
+          "name": "Aloo Tikki Burger",
+          "description": "Crispy aloo tikki patty in a bun with sauces.",
+          "price": 45,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Veg Burger",
+          "description": "Classic veg burger with fresh veggies and sauces.",
+          "price": 80,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Paneer Burger",
+          "description": "Grilled paneer patty burger.",
+          "price": 95,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Fried Chicken Burger",
+          "description": "Crispy fried chicken burger.",
+          "price": 100,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Grilled Chicken Burger",
+          "description": "Juicy grilled chicken burger.",
+          "price": 100,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "category": "Snacks",
+      "items": [
+        {
+          "name": "French Fries (Salted/Peri-Peri)",
+          "description": "Crispy fries served with dip.",
+          "price": 75,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Loaded Fries (Veg/Chicken/Cheese)",
+          "description": "Fries topped with cheese, veggies, or chicken.",
+          "price": 100,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "category": "Pasta",
+      "items": [
+        {
+          "name": "Red Sauce Pasta (Veg/Chicken)",
+          "description": "Pasta with rich red tomato sauce.",
+          "price": "100/130",
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "White Sauce Pasta (Veg/Chicken)",
+          "description": "Creamy white sauce pasta.",
+          "price": "120/140",
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Mix Sauce Pasta (Veg/Chicken)",
+          "description": "Blend of white and red sauce pasta.",
+          "price": "120/140",
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "category": "Rolls",
+      "items": [
+        {
+          "name": "Veg Roll",
+          "description": "Stuffed with fresh veggies and sauces.",
+          "price": 50,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Paneer Roll",
+          "description": "Spicy paneer wrapped in paratha.",
+          "price": 85,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Chicken Roll",
+          "description": "Juicy chicken wrapped in paratha.",
+          "price": 85,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "category": "Indian Dishes",
+      "items": [
+        {
+          "name": "Paneer Butter Masala",
+          "description": "Creamy tomato-based curry with paneer.",
+          "price": 185,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Kadhai Paneer",
+          "description": "Spicy and tangy kadhai paneer.",
+          "price": 200,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Chicken Butter Masala",
+          "description": "Rich and creamy butter chicken curry.",
+          "price": 235,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "category": "Rice & Noodles",
+      "items": [
+        {
+          "name": "Veg Chow Mein",
+          "description": "Stir-fried noodles with vegetables.",
+          "price": 80,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Egg Biryani",
+          "description": "Spiced rice with eggs and aromatic flavors.",
+          "price": 100,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Chicken Biryani",
+          "description": "Spiced rice with tender chicken pieces.",
+          "price": 125,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "category": "Desserts",
+      "items": [
+        {
+          "name": "Chocolate Cake Shake",
+          "description": "Blended chocolate cake in a shake.",
+          "price": 150,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "White Forest Pastry",
+          "description": "Soft and creamy white forest pastry.",
+          "price": 90,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "name": "Dark Fantasy Pastry",
+          "description": "Chocolate fantasy pastry.",
+          "price": 70,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    }
+  ]
+}
