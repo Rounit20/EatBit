@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";  // ✅ Import Storage
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCpGI_nv1eBwKHc99wmiF48ogOef5UYLzc",
+    apiKey: "",
     authDomain: "eatbit-adbda.firebaseapp.com",
     projectId: "eatbit-adbda",
     storageBucket: "eatbit-adbda.appspot.com",  // ✅ Ensure storage is set up
