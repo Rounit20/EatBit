@@ -756,12 +756,14 @@ const AdminDashboard = () => {
 
                                             {/* Admin Actions */}
                                             <div className="flex gap-2">
-                                                <button
+                                                {
+                                                // work in progress
+                                                /* <button
                                                     onClick={() => navigate(`/outlets/${outlet.id}`)}
                                                     className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-3 rounded-lg text-sm font-medium transition duration-200 flex items-center justify-center gap-1"
                                                 >
                                                     <FaEye /> View
-                                                </button>
+                                                </button> */}
                                                 <button
                                                     onClick={() => navigate(`/edit-outlet/${outlet.id}`)}
                                                     className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-lg text-sm font-medium transition duration-200 flex items-center justify-center gap-1"

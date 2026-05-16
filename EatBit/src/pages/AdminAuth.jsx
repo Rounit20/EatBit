@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, addDoc, query, where, getDocs, limit, setDoc, doc, deleteDoc, serverTimestamp } from "firebase/firestore";
-import { FaUser, FaLock, FaUserPlus, FaEye, FaEyeSlash, FaShieldAlt } from "react-icons/fa";
+import { FaUser, FaLock, FaEye, FaEyeSlash, FaShieldAlt } from "react-icons/fa";
 import bcrypt from 'bcryptjs';
 
 const AdminAuth = () => {
@@ -211,7 +211,7 @@ const AdminAuth = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         
         if (!validateForm()) {
@@ -219,9 +219,9 @@ const AdminAuth = () => {
         }
 
         if (isLogin) {
-            await handleLogin();
+            handleLogin();
         } else {
-            await handleRegister();
+            handleRegister();
         }
     };
 
@@ -233,197 +233,219 @@ const AdminAuth = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-red-500 via-red-600 to-red-700 flex items-center justify-center px-4">
-            <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8">
-                {/* Header */}
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+            
+            <div className="max-w-md w-full relative z-10">
+                {/* Header Section */}
                 <div className="text-center mb-8">
-                    <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <FaShieldAlt className="text-red-500 text-2xl" />
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-lg mb-4 shadow-lg">
+                        <FaShieldAlt className="text-white text-2xl" />
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                        Admin {isLogin ? 'Login' : 'Registration'}
+                    <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                        Administrator Access
                     </h1>
-                    <p className="text-gray-600">
-                        {isLogin 
-                            ? '🌐 Access from any device with your credentials' 
-                            : 'Create a new admin account'
-                        }
+                    <p className="text-gray-600 text-sm">
+                        {isLogin ? 'Sign in to your account' : 'Create new administrator account'}
                     </p>
                 </div>
 
-                {/* Cross-device info */}
-                {isLogin && (
-                    <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                        <p className="text-blue-700 text-sm">
-                            ✨ Your session will sync across all devices automatically
-                        </p>
-                    </div>
-                )}
-
-                {/* Rate limiting warning */}
-                {attempts >= 3 && attempts < 5 && (
-                    <div className="mb-4 p-3 bg-yellow-100 border border-yellow-300 rounded-lg">
-                        <p className="text-yellow-700 text-sm">
-                            ⚠️ Warning: {5 - attempts} attempts remaining before temporary lockout
-                        </p>
-                    </div>
-                )}
-
-                {/* Account locked warning */}
-                {attempts >= 5 && (
-                    <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-lg">
-                        <p className="text-red-700 text-sm">
-                            🔒 Account temporarily locked due to too many failed attempts
-                        </p>
-                    </div>
-                )}
-
-                {/* Form */}
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Username Field */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Username
-                        </label>
-                        <div className="relative">
-                            <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                            <input
-                                type="text"
-                                name="username"
-                                value={formData.username}
-                                onChange={handleInputChange}
-                                placeholder="Enter your username"
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 text-gray-900 bg-white"
-                                required
-                                disabled={attempts >= 5}
-                            />
-                        </div>
+                {/* Auth Card */}
+                <div className="bg-white rounded-lg shadow-md border border-gray-200">
+                    {/* Tabs */}
+                    <div className="flex border-b border-gray-200">
+                        <button
+                            type="button"
+                            onClick={() => setIsLogin(true)}
+                            className={`flex-1 py-3 text-sm font-medium transition-colors ${
+                                isLogin 
+                                    ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50' 
+                                    : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                        >
+                            Sign In
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setIsLogin(false)}
+                            className={`flex-1 py-3 text-sm font-medium transition-colors ${
+                                !isLogin 
+                                    ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50' 
+                                    : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                        >
+                            Register
+                        </button>
                     </div>
 
-                    {/* Password Field */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Password
-                        </label>
-                        <div className="relative">
-                            <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                placeholder="Enter your password"
-                                className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 text-gray-900 bg-white"
-                                required
-                                disabled={attempts >= 5}
-                            />
+                    {/* Form Container */}
+                    <div className="p-6">
+                        {/* Rate Limiting Warning */}
+                        {attempts >= 3 && attempts < 5 && (
+                            <div className="mb-4 p-3 bg-yellow-50 border-l-4 border-yellow-500 text-sm">
+                                <p className="font-medium text-yellow-800">Too many attempts</p>
+                                <p className="text-yellow-700 text-xs mt-1">
+                                    {5 - attempts} attempts remaining before temporary lockout
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Account locked warning */}
+                        {attempts >= 5 && (
+                            <div className="mb-4 p-3 bg-red-50 border-l-4 border-red-500 text-sm">
+                                <p className="font-medium text-red-800">Account locked</p>
+                                <p className="text-red-700 text-xs mt-1">
+                                    Too many failed attempts. Please try again later.
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Form */}
+                        <div className="space-y-4">
+                            {/* Username */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    Username
+                                </label>
+                                <div className="relative">
+                                    <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm" />
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter username"
+                                        className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-900 bg-white text-sm"
+                                        required
+                                        disabled={attempts >= 5}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Password */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm" />
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter password"
+                                        className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-900 bg-white text-sm"
+                                        required
+                                        disabled={attempts >= 5}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                                        disabled={attempts >= 5}
+                                    >
+                                        {showPassword ? <FaEyeSlash className="text-sm" /> : <FaEye className="text-sm" />}
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Confirm Password (Registration only) */}
+                            {!isLogin && (
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                        Confirm Password
+                                    </label>
+                                    <div className="relative">
+                                        <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm" />
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            name="confirmPassword"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                            placeholder="Confirm password"
+                                            className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-900 bg-white text-sm"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Remember Me & Forgot Password */}
+                            {isLogin && (
+                                <div className="flex items-center justify-between text-sm">
+                                    <label className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                        />
+                                        <span className="ml-2 text-gray-600">Remember me</span>
+                                    </label>
+                                    <button type="button" className="text-blue-600 hover:text-blue-700 font-medium">
+                                        Forgot password?
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* Message Display */}
+                            {message && (
+                                <div className={`p-3 rounded-md text-sm ${
+                                    message.includes('Error') || message.includes('Invalid') || message.includes('exists') || 
+                                    message.includes('deactivated') || message.includes('locked') || message.includes('Too many')
+                                        ? 'bg-red-50 text-red-700 border border-red-200'
+                                        : 'bg-green-50 text-green-700 border border-green-200'
+                                }`}>
+                                    {message}
+                                </div>
+                            )}
+
+                            {/* Submit Button */}
                             <button
                                 type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition duration-200"
-                                disabled={attempts >= 5}
+                                onClick={handleSubmit}
+                                disabled={isLoading || attempts >= 5}
+                                className={`w-full py-2.5 rounded-md font-medium text-sm transition ${
+                                    isLoading || attempts >= 5
+                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                        : 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md'
+                                }`}
                             >
-                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                {isLoading 
+                                    ? (
+                                        <span className="flex items-center justify-center">
+                                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            {isLogin ? 'Signing in...' : 'Creating account...'}
+                                        </span>
+                                    ) 
+                                    : attempts >= 5
+                                    ? 'Account Locked'
+                                    : (isLogin ? 'Sign In' : 'Create Account')
+                                }
                             </button>
                         </div>
                     </div>
-
-                    {/* Confirm Password Field (Registration only) */}
-                    {!isLogin && (
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Confirm Password
-                            </label>
-                            <div className="relative">
-                                <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    name="confirmPassword"
-                                    value={formData.confirmPassword}
-                                    onChange={handleInputChange}
-                                    placeholder="Confirm your password"
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 text-gray-900 bg-white"
-                                    required
-                                />
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Message Display */}
-                    {message && (
-                        <div className={`p-4 rounded-lg text-sm font-medium ${
-                            message.includes('Error') || message.includes('Invalid') || message.includes('exists') || 
-                            message.includes('deactivated') || message.includes('locked') || message.includes('Too many')
-                                ? 'bg-red-100 text-red-700 border border-red-300'
-                                : 'bg-green-100 text-green-700 border border-green-300'
-                        }`}>
-                            {message}
-                        </div>
-                    )}
-
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        disabled={isLoading || attempts >= 5}
-                        className={`w-full py-3 rounded-lg font-semibold text-white transition duration-200 ${
-                            isLoading || attempts >= 5
-                                ? 'bg-gray-400 cursor-not-allowed'
-                                : 'bg-red-500 hover:bg-red-600 hover:shadow-lg transform hover:scale-[1.02]'
-                        }`}
-                    >
-                        {isLoading 
-                            ? (
-                                <span className="flex items-center justify-center">
-                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    {isLogin ? 'Logging in...' : 'Creating account...'}
-                                </span>
-                            ) 
-                            : attempts >= 5
-                            ? '🔒 Account Locked - Try Later'
-                            : (isLogin ? '🌐 Login (Any Device)' : 'Create Account')
-                        }
-                    </button>
-
-                    {/* Toggle Auth Mode */}
-                    <div className="text-center pt-4">
-                        <button
-                            type="button"
-                            onClick={toggleAuthMode}
-                            className={`font-medium transition duration-200 ${
-                                attempts >= 5 
-                                    ? 'text-gray-400 cursor-not-allowed' 
-                                    : 'text-red-500 hover:text-red-600'
-                            }`}
-                            disabled={attempts >= 5}
-                        >
-                            {isLogin 
-                                ? "Don't have an admin account? Register here" 
-                                : "Already have an account? Login here"
-                            }
-                        </button>
-                    </div>
-                </form>
-
-                {/* Back to Main Site */}
-                <div className="text-center mt-8 pt-6 border-t border-gray-200">
-                    <button
-                        onClick={() => navigate('/')}
-                        className="text-gray-500 hover:text-gray-700 font-medium transition duration-200 flex items-center justify-center mx-auto"
-                    >
-                        ← Back to Main Site
-                    </button>
                 </div>
 
-                {/* Security Notice */}
-                <div className="text-center mt-4">
-                    <p className="text-xs text-gray-400">
-                        🔐 Sessions are encrypted and sync across devices
+                {/* Footer Info */}
+                <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500">
+                        Protected by enterprise-grade encryption
                     </p>
                 </div>
             </div>
+
+            <style jsx>{`
+                .bg-grid-pattern {
+                    background-image: 
+                        linear-gradient(to right, #e5e7eb 1px, transparent 1px),
+                        linear-gradient(to bottom, #e5e7eb 1px, transparent 1px);
+                    background-size: 20px 20px;
+                }
+            `}</style>
         </div>
     );
 };
